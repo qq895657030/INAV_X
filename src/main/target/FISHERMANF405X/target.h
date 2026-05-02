@@ -158,8 +158,10 @@
 #define WS2811_PIN                      PB3
 
 // ******* FEATURES ********
-#define SERIALRX_UART                   SERIAL_PORT_USART1
-#define SERIALRX_PROVIDER               SERIALRX_SBUS
+#define SERIALRX_UART                   SERIAL_PORT_USART2
+#define DEFAULT_RX_TYPE                 RX_TYPE_SERIAL
+#define SERIALRX_PROVIDER               SERIALRX_IBUS
+#define GPS_UART                        SERIAL_PORT_USART5
 
 #define DEFAULT_FEATURES                (FEATURE_OSD | FEATURE_TELEMETRY)
 

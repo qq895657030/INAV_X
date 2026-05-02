@@ -47,6 +47,7 @@
 
 #include "telemetry/telemetry.h"
 #include "fc/fc_msp_box.h"
+#include "fc/rc_modes.h"
 #include "io/piniobox.h"
 
 void targetConfiguration(void)
@@ -54,10 +55,21 @@ void targetConfiguration(void)
     pinioBoxConfigMutable()->permanentId[0] = BOX_PERMANENT_ID_USER1;
     pinioBoxConfigMutable()->permanentId[1] = BOX_PERMANENT_ID_USER2;
     
-    serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART1)].functionMask = FUNCTION_RX_SERIAL;
+    serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART2)].functionMask = FUNCTION_RX_SERIAL;
     
     serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART4)].functionMask = FUNCTION_MSP;
     serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART4)].msp_baudrateIndex = BAUD_115200;
+    serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART5)].functionMask = FUNCTION_GPS;
+
+    modeActivationConditionsMutable(0)->modeId = BOXARM;
+    modeActivationConditionsMutable(0)->auxChannelIndex = 0; // AUX1 / channel 5
+    modeActivationConditionsMutable(0)->range.startStep = CHANNEL_VALUE_TO_STEP(1750);
+    modeActivationConditionsMutable(0)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
+
+    modeActivationConditionsMutable(1)->modeId = BOXANGLE;
+    modeActivationConditionsMutable(1)->auxChannelIndex = 2; // AUX3 / channel 7
+    modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(900);
+    modeActivationConditionsMutable(1)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
 
     //三寸机加速计校准值 需要根据飞控安装位置调整
     accelerometerConfigMutable()->accZero.raw[X] = -1;
