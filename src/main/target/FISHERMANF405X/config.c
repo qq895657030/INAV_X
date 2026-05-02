@@ -82,6 +82,11 @@ void targetConfiguration(void)
     modeActivationConditionsMutable(3)->range.startStep = CHANNEL_VALUE_TO_STEP(1300);
     modeActivationConditionsMutable(3)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
 
+    modeActivationConditionsMutable(4)->modeId = BOXUSER1;
+    modeActivationConditionsMutable(4)->auxChannelIndex = 3; // AUX4 / channel 8
+    modeActivationConditionsMutable(4)->range.startStep = CHANNEL_VALUE_TO_STEP(1700);
+    modeActivationConditionsMutable(4)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
+
     //罗盘配置 需要根据罗盘安装位置调整
     compassConfigMutable()->magZero.raw[X] = 217;
     compassConfigMutable()->magZero.raw[Y] = 296;
