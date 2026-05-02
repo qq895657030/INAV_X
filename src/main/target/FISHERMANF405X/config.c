@@ -72,6 +72,16 @@ void targetConfiguration(void)
     modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(900);
     modeActivationConditionsMutable(1)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
 
+    modeActivationConditionsMutable(2)->modeId = BOXNAVPOSHOLD;
+    modeActivationConditionsMutable(2)->auxChannelIndex = 2; // AUX3 / channel 7
+    modeActivationConditionsMutable(2)->range.startStep = CHANNEL_VALUE_TO_STEP(1700);
+    modeActivationConditionsMutable(2)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
+
+    modeActivationConditionsMutable(3)->modeId = BOXNAVALTHOLD;
+    modeActivationConditionsMutable(3)->auxChannelIndex = 2; // AUX3 / channel 7
+    modeActivationConditionsMutable(3)->range.startStep = CHANNEL_VALUE_TO_STEP(1300);
+    modeActivationConditionsMutable(3)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
+
     //罗盘配置 需要根据罗盘安装位置调整
     compassConfigMutable()->magZero.raw[X] = 217;
     compassConfigMutable()->magZero.raw[Y] = 296;
