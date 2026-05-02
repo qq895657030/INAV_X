@@ -41,6 +41,7 @@
 
 #include "io/serial.h"
 
+#include "sensors/acceleration.h"
 #include "sensors/battery.h"
 #include "sensors/sensors.h"
 
@@ -57,4 +58,12 @@ void targetConfiguration(void)
     
     serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART4)].functionMask = FUNCTION_MSP;
     serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIAL_PORT_USART4)].msp_baudrateIndex = BAUD_115200;
+
+    //三寸机加速计校准值 需要根据飞控安装位置调整
+    accelerometerConfigMutable()->accZero.raw[X] = -1;
+    accelerometerConfigMutable()->accZero.raw[Y] = -5;
+    accelerometerConfigMutable()->accZero.raw[Z] = 6;
+    accelerometerConfigMutable()->accGain.raw[X] = 4095;
+    accelerometerConfigMutable()->accGain.raw[Y] = 4095;
+    accelerometerConfigMutable()->accGain.raw[Z] = 4109;
 }
