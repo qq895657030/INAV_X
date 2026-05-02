@@ -50,3 +50,6 @@ tokens.yaml
 # Local development files
 .semgrepignore
 build_sitl/
+
+
+.codex
