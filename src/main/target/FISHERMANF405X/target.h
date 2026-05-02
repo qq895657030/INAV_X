@@ -163,7 +163,7 @@
 #define SERIALRX_PROVIDER               SERIALRX_IBUS
 #define GPS_UART                        SERIAL_PORT_USART5
 
-#define DEFAULT_FEATURES                (FEATURE_OSD | FEATURE_TELEMETRY)
+#define DEFAULT_FEATURES                (FEATURE_OSD | FEATURE_TELEMETRY | FEATURE_PWM_OUTPUT_ENABLE)
 
 #define TARGET_IO_PORTA                 0xffff
 #define TARGET_IO_PORTB                 0xffff

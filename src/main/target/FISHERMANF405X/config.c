@@ -43,6 +43,7 @@
 
 #include "sensors/acceleration.h"
 #include "sensors/battery.h"
+#include "sensors/compass.h"
 #include "sensors/sensors.h"
 
 #include "telemetry/telemetry.h"
@@ -70,6 +71,18 @@ void targetConfiguration(void)
     modeActivationConditionsMutable(1)->auxChannelIndex = 2; // AUX3 / channel 7
     modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(900);
     modeActivationConditionsMutable(1)->range.endStep = CHANNEL_VALUE_TO_STEP(2100);
+
+    //罗盘配置 需要根据罗盘安装位置调整
+    compassConfigMutable()->magZero.raw[X] = 217;
+    compassConfigMutable()->magZero.raw[Y] = 296;
+    compassConfigMutable()->magZero.raw[Z] = -279;
+    compassConfigMutable()->magGain[X] = 1021;
+    compassConfigMutable()->magGain[Y] = 1069;
+    compassConfigMutable()->magGain[Z] = 1004;
+    compassConfigMutable()->mag_align = CW90_DEG_FLIP;
+    compassConfigMutable()->rollDeciDegrees = -250;
+    compassConfigMutable()->pitchDeciDegrees = 1800;
+    compassConfigMutable()->yawDeciDegrees = 900;
 
     //三寸机加速计校准值 需要根据飞控安装位置调整
     accelerometerConfigMutable()->accZero.raw[X] = -1;
