@@ -41,6 +41,8 @@
 
 #include "io/serial.h"
 
+#include "navigation/navigation.h"
+
 #include "sensors/acceleration.h"
 #include "sensors/battery.h"
 #include "sensors/compass.h"
@@ -106,4 +108,7 @@ void targetConfiguration(void)
     accelerometerConfigMutable()->accGain.raw[X] = 4095;
     accelerometerConfigMutable()->accGain.raw[Y] = 4095;
     accelerometerConfigMutable()->accGain.raw[Z] = 4109;
+
+    navConfigMutable()->mc.max_manual_climb_rate = 50;
+    navConfigMutable()->mc.max_auto_climb_rate = 100;
 }
