@@ -24,7 +24,7 @@
 #include "platform.h"
 
 #define DEBUG32_VALUE_COUNT 8
-#define BLACKBOX_USER_VALUE_COUNT 1
+#define BLACKBOX_USER_VALUE_COUNT 8
 extern int32_t debug[DEBUG32_VALUE_COUNT];
 extern int16_t user[BLACKBOX_USER_VALUE_COUNT];
 extern uint8_t debugMode;

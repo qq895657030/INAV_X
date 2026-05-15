@@ -22,5 +22,5 @@ timeUs_t sectionTimes[2][4];
 #endif
 
 int32_t debug[DEBUG32_VALUE_COUNT];
-int16_t user[BLACKBOX_USER_VALUE_COUNT] = {555};
+int16_t user[BLACKBOX_USER_VALUE_COUNT] = {555, 0, 0, 0, 0, 0, 0, 0};
 uint8_t debugMode;
