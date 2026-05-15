@@ -324,6 +324,7 @@ static const blackboxDeltaFieldDefinition_t blackboxMainFields[] = {
     {"debug",       5, SIGNED,   .Ipredict = PREDICT(0),       .Iencode = ENCODING(SIGNED_VB),   .Ppredict = PREDICT(AVERAGE_2),     .Pencode = ENCODING(SIGNED_VB), FLIGHT_LOG_FIELD_CONDITION_DEBUG},
     {"debug",       6, SIGNED,   .Ipredict = PREDICT(0),       .Iencode = ENCODING(SIGNED_VB),   .Ppredict = PREDICT(AVERAGE_2),     .Pencode = ENCODING(SIGNED_VB), FLIGHT_LOG_FIELD_CONDITION_DEBUG},
     {"debug",       7, SIGNED,   .Ipredict = PREDICT(0),       .Iencode = ENCODING(SIGNED_VB),   .Ppredict = PREDICT(AVERAGE_2),     .Pencode = ENCODING(SIGNED_VB), FLIGHT_LOG_FIELD_CONDITION_DEBUG},
+    {"user",        0, SIGNED,   .Ipredict = PREDICT(0),       .Iencode = ENCODING(SIGNED_VB),   .Ppredict = PREDICT(AVERAGE_2),     .Pencode = ENCODING(SIGNED_VB), CONDITION(ALWAYS)},
     /* Motors only rarely drops under minthrottle (when stick falls below mincommand), so predict minthrottle for it and use *unsigned* encoding (which is large for negative numbers but more compact for positive ones): */
     {"motor",       0, UNSIGNED, .Ipredict = PREDICT(MINTHROTTLE), .Iencode = ENCODING(UNSIGNED_VB), .Ppredict = PREDICT(AVERAGE_2), .Pencode = ENCODING(SIGNED_VB), CONDITION(AT_LEAST_MOTORS_1)},
     /* Subsequent motors base their I-frame values on the first one, P-frame values on the average of last two frames: */
@@ -507,6 +508,7 @@ typedef struct blackboxMainState_s {
     int16_t accVib;
     int16_t attitude[XYZ_AXIS_COUNT];
     int32_t debug[DEBUG32_VALUE_COUNT];
+    int16_t user[BLACKBOX_USER_VALUE_COUNT];
     int16_t motor[MAX_SUPPORTED_MOTORS];
     int16_t servo[MAX_SUPPORTED_SERVOS];
 
@@ -986,6 +988,7 @@ static void writeIntraframe(void)
     if (testBlackboxCondition(FLIGHT_LOG_FIELD_CONDITION_DEBUG)) {
         blackboxWriteSignedVBArray(blackboxCurrent->debug, DEBUG32_VALUE_COUNT);
     }
+    blackboxWriteSigned16VBArray(blackboxCurrent->user, BLACKBOX_USER_VALUE_COUNT);
 
     if (testBlackboxCondition(FLIGHT_LOG_FIELD_CONDITION_AT_LEAST_MOTORS_1)) {
         //Motors can be below minthrottle when disarmed, but that doesn't happen much
@@ -1253,6 +1256,7 @@ static void writeInterframe(void)
     if (testBlackboxCondition(FLIGHT_LOG_FIELD_CONDITION_DEBUG)) {
         blackboxWriteArrayUsingAveragePredictor32(offsetof(blackboxMainState_t, debug), DEBUG32_VALUE_COUNT);
     }
+    blackboxWriteArrayUsingAveragePredictor16(offsetof(blackboxMainState_t, user), BLACKBOX_USER_VALUE_COUNT);
 
     if (testBlackboxCondition(FLIGHT_LOG_FIELD_CONDITION_AT_LEAST_MOTORS_1)) {
         blackboxWriteArrayUsingAveragePredictor16(offsetof(blackboxMainState_t, motor),     getMotorCount());
@@ -1702,6 +1706,10 @@ static void loadMainState(timeUs_t currentTimeUs)
 
     for (int i = 0; i < DEBUG32_VALUE_COUNT; i++) {
         blackboxCurrent->debug[i] = debug[i];
+    }
+
+    for (int i = 0; i < BLACKBOX_USER_VALUE_COUNT; i++) {
+        blackboxCurrent->user[i] = user[i];
     }
 
     const int motorCount = getMotorCount();

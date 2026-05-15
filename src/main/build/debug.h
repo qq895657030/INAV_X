@@ -24,10 +24,13 @@
 #include "platform.h"
 
 #define DEBUG32_VALUE_COUNT 8
+#define BLACKBOX_USER_VALUE_COUNT 1
 extern int32_t debug[DEBUG32_VALUE_COUNT];
+extern int16_t user[BLACKBOX_USER_VALUE_COUNT];
 extern uint8_t debugMode;
 
 #define DEBUG_SET(mode, index, value) {if (debugMode == (mode)) {debug[(index)] = (value);}}
+#define USER_SET(index, value) {user[(index)] = (value);}
 
 #define DEBUG_SECTION_TIMES
 
